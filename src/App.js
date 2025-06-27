@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import OwnerSignup from './components/Owner_signup';
+import OwnerLogin from './components/Owner_login';
+import BookCar from './components/BookCar';
+import AddCar from './components/AddCar';
+import MyBooking from './components/MyBooking';
+import Footer from './components/Footer';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem('token'));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar isLoggedIn={isLoggedIn} />
+      <Routes>
+        <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/owner_signup" element={<OwnerSignup />} />
+        <Route path="/owner_login" element={<OwnerLogin />} />
+        <Route path="/addcar" element={isLoggedIn ? <AddCar /> : <Navigate to="/login" />} />
+        <Route path="/bookcars/:id" element={<BookCar />} />
+        <Route path="/booking" element={<MyBooking />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
