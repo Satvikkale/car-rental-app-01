@@ -23,11 +23,15 @@ const Signup = () => {
         e.preventDefault();
         try {
             console.log('Sending signup request:', formData); // Add logging
-            const response = await axios.post('http://localhost:5000/api/signup', formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_BASE_URL}/api/signup`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             if (response.status === 200) {
                 alert('Signup successful:', response.data); // Add alert

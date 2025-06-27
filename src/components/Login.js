@@ -13,15 +13,16 @@ const Login = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/login', { email, password });
+            const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+            const response = await axios.post(`${apiUrl}/api/login`, { email, password });
             const data = response.data;
             if (data && data.email === email) {
-                // Handle successful login
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify({ id: data.id, name: data.name, email: data.email }));
-                localStorage.setItem('type', 'user');
-                navigate('/');
-                window.location.reload(); // Refresh the page to update the navbar
+            // Handle successful login
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify({ id: data.id, name: data.name, email: data.email }));
+            localStorage.setItem('type', 'user');
+            navigate('/');
+            window.location.reload(); // Refresh the page to update the navbar
             } else {
                 // Handle login failure
                 alert('Enter valid details');

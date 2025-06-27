@@ -61,16 +61,16 @@ const BookCar = () => {
         };
         try {
             console.log('Sending booking data:', bookingDetails); // Add logging
-            const response = await axios.post('http://localhost:5000/api/bookcar', bookingDetails, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/bookcar`, bookingDetails, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
             });
             if (response.status === 201) {
-                alert('Booking confirmed!');
-                navigate('/booking');
+            alert('Booking confirmed!');
+            navigate('/booking');
             } else {
-                alert('Failed to book car');
+            alert('Failed to book car');
             }
         } catch (error) {
             console.error('Error booking car:', error); // Add logging

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const Home = () => {
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -9,11 +10,13 @@ const Home = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
 
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
     useEffect(() => {
         const fetchCars = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('http://localhost:5000/api/cars');
+                const response = await axios.get(`${API_BASE_URL}/api/cars`);
                 setCars(response.data);
                 if (type === 'user') {
                     const filteredCars = response.data.filter(cars => cars.status === true);
@@ -29,14 +32,14 @@ const Home = () => {
         };
 
         fetchCars();
-    }, [type]);
+    }, [API_BASE_URL]);
 
     const searchhandle = async (e) => {
         let key = e.target.value;
         setLoading(true);
         if (key) {
             try {
-                const response = await axios.get(`http://localhost:5000/search/${key}`);
+                const response = await axios.get(`${API_BASE_URL}/search/${key}`);
                 const filteredCars = response.data.filter(cars => cars.status === true);
                 setCars(filteredCars);
             } catch (error) {
@@ -47,7 +50,7 @@ const Home = () => {
         } else {
             const fetchCars = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5000/api/cars');
+                    const response = await axios.get(`${API_BASE_URL}/api/cars`);
                     const filteredCars = response.data.filter(cars => cars.status === true);
                     setCars(filteredCars);
                 } catch (error) {

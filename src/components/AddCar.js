@@ -67,11 +67,15 @@ const AddCar = () => {
 
         try {
             console.log('Sending car data:', carData); // Add logging
-            const response = await axios.post('http://localhost:5000/api/addcar', carData, {
-                headers: {
-                    'Content-Type': 'application/json'
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_BASE_URL}/api/addcar`,
+                carData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
-            });
+            );
             if (response.status === 201) {
                 alert('Car added successfully');
                 navigate('/');

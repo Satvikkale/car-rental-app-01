@@ -9,8 +9,8 @@ import OwnerSignup from './components/Owner_signup';
 import OwnerLogin from './components/Owner_login';
 import BookCar from './components/BookCar';
 import AddCar from './components/AddCar';
-import MyBooking from './components/MyBooking';
 import Footer from './components/Footer';
+import MyBooking from './components/MyBooking';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));

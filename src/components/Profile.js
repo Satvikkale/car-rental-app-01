@@ -12,11 +12,13 @@ const Profile = () => {
     const navigate = useNavigate();
     const [type, setType] = useState(localStorage.getItem('type'));
 
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+
     useEffect(() => {
         const fetchProfile = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('http://localhost:5000/api/profile', {
+                const response = await axios.get(`${API_BASE_URL}/api/profile`, {
                     params: { email, type }
                 });
                 setProfile(response.data);
@@ -29,7 +31,7 @@ const Profile = () => {
         };
 
         fetchProfile();
-    }, [email, type]);
+    }, [email, type, API_BASE_URL]);
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
@@ -37,7 +39,7 @@ const Profile = () => {
         setImage(base64);
 
         try {
-            await axios.put('http://localhost:5000/api/profile', {
+            await axios.put(`${API_BASE_URL}/api/profile`, {
                 email,
                 type,
                 profileImage: base64

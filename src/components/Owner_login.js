@@ -14,18 +14,21 @@ const OwnerLogin = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/owner_login', { email, password });
+            const response = await axios.post(
+            `${process.env.REACT_APP_API_URL}/api/owner_login`,
+            { email, password }
+            );
             const data = response.data;
             if (data && data.email === email) {
-                // Handle successful login
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('owner', JSON.stringify({ name: data.name, email: data.email }));
-                localStorage.setItem('type', 'owner');
-                navigate('/');
-                window.location.reload(); // Refresh the page to update the navbar
+            // Handle successful login
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('owner', JSON.stringify({ name: data.name, email: data.email }));
+            localStorage.setItem('type', 'owner');
+            navigate('/');
+            window.location.reload(); // Refresh the page to update the navbar
             } else {
-                // Handle login failure
-                alert('Enter valid details');
+            // Handle login failure
+            alert('Enter valid details');
             }
         } catch (error) {
             console.error('Error:', error);

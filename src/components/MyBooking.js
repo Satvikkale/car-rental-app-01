@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+
 const MyBooking = () => {
     const [bookings, setBookings] = useState([]);
     const [type, setType] = useState(localStorage.getItem('type'));
@@ -8,7 +10,7 @@ const MyBooking = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/bookings'); 
+                const response = await axios.get(`${API_BASE_URL}/api/bookings`); 
                 setBookings(response.data);
             } catch (error) {
                 console.error('Error fetching bookings:', error);
@@ -24,7 +26,7 @@ const MyBooking = () => {
 
     const handleDelete = async (bookingId) => {
         try {
-            await axios.delete(`http://localhost:5000/api/bookings/${bookingId}`);
+            await axios.delete(`${API_BASE_URL}/api/bookings/${bookingId}`);
             setBookings(bookings.filter((booking) => booking._id !== bookingId));
         } catch (error) {
             console.error('Error deleting booking:', error);
