@@ -30,7 +30,7 @@ function App() {
         <Route path="/owner_login" element={<OwnerLogin />} />
         <Route path="/addcar" element={isLoggedIn ? <AddCar /> : <Navigate to="/login" />} />
         <Route path="/bookcars/:id" element={<BookCar />} />
-        <Route path="/booking" element={<MyBooking />} />
+        <Route path="/booking" element={isLoggedIn ? <MyBooking /> : <Navigate to="/login" />} />
       </Routes>
       <Footer />
     </Router>
